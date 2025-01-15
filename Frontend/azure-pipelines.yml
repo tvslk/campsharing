@@ -1,0 +1,88 @@
+trigger:
+  - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  node_version: '20.x' # Specify Node.js version 20
+  system.debug: true  # Enable detailed logs for debugging
+
+steps:
+# Step 1: Set up Node.js
+- task: NodeTool@0
+  inputs:
+    versionSpec: $(node_version)
+  displayName: 'Use Node.js $(node_version)'
+
+# Step 2: Install dependencies locally (optional, for testing builds)
+- script: |
+    echo "Installing dependencies..."
+    npm ci
+  displayName: 'Install Dependencies'
+
+# Step 3: Build the project
+- script: |
+    echo "Building project..."
+    npm run build
+    echo "Build completed successfully!"
+  displayName: 'Build Project'
+
+- script: |
+    echo "Pruning dev dependencies..."
+    npm prune --production
+  displayName: 'Prune Dev Dependencies'
+
+# Step 4: Copy necessary files into dist/
+- script: |
+    echo "Preparing deployment package..."
+    cp server.js dist/
+    cp package.json dist/
+    cp -r node_modules dist/
+  displayName: 'Prepare Deployment Files'
+
+# Step 5: Verify build directory
+- script: |
+    echo "Build directory contents:"
+    ls -R dist
+  displayName: 'Inspect Build Directory'
+
+# Step 6: Archive build directory
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: 'dist'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/drop.zip'
+  displayName: 'Archive Build Output'
+
+# Step 7: Verify archive contents
+- script: |
+    echo "Contents of the archive:"
+    unzip -l $(Build.ArtifactStagingDirectory)/drop.zip
+  displayName: 'Inspect Deployment Archive'
+
+# Step 8: Publish build artifact
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/drop.zip'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+  displayName: 'Publish Build Artifact'
+
+# Step 9: Deploy to Azure Web App
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    azureSubscription: 'AzureSubscription1React'
+    appType: 'webAppLinux'
+    WebAppName: 'ReactWebAppCampsharing'
+    package: '$(Build.ArtifactStagingDirectory)/drop.zip'
+    StartupCommand: 'npm start'
+    deploymentType: 'zipDeploy'
+  displayName: 'Deploy to Azure Web App'
+
+# Step 10: Validate the deployment
+- script: |
+    echo "Validating deployment..."
+    echo "Deployment URL: https://reactwebappcampsharing.azurewebsites.net"
+  displayName: 'Validate Deployment'

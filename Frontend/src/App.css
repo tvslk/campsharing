@@ -1,0 +1,62 @@
+.app {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Ensures content is horizontally centered */
+}
+
+.heroSection {
+  position: relative;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the content horizontally */
+  justify-content: center; /* Centers the content vertically */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 2rem; /* Adds spacing around the text */
+  text-align: center; /* Centers the text */
+}
+
+.card-section {
+  display: flex;
+  flex-wrap: wrap; /* Allows cards to wrap */
+  justify-content: center; /* Centers the cards horizontally */
+  align-items: center; /* Aligns the cards vertically */
+  gap: 2rem; /* Adds consistent spacing between the cards */
+  max-width: 1200px; /* Ensures the cards don't span too wide */
+  margin: 0 auto; /* Centers the card section in the viewport */
+  padding: 2rem; /* Adds padding around the card section */
+  box-sizing: border-box; /* Includes padding in the width calculation */
+}
+
+.card {
+  flex: 1 1 calc(25% - 2rem); /* Adjusts the size of the cards and ensures proper wrapping */
+  max-width: 300px; /* Ensures the cards don't grow too large */
+  background: #fff; /* Adds a white background */
+  border-radius: 8px; /* Rounds the corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a shadow for separation */
+  text-align: center; /* Centers the content inside the card */
+  padding: 1rem; /* Adds padding inside the card */
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; /* Prevents horizontal scrolling */
+}
+
+.heroText {
+  margin-bottom: 2rem; /* Adds spacing between the text and the cards */
+  font-size: 1.5rem; /* Adjusts the font size */
+  line-height: 1.8; /* Improves text readability */
+  color: #333; /* Darker text color */
+}
+

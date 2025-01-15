@@ -1,0 +1,9 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+	<title>dot-svg</title>
+	<style>
+		.s0 { opacity: .7;fill: #f4e9d6 } 
+	</style>
+	<g>
+		<path class="s0" d="m12 18c-3.3 0-6-2.7-6-6 0-3.3 2.7-6 6-6 3.3 0 6 2.7 6 6 0 3.3-2.7 6-6 6z"/>
+	</g>
+</svg>

@@ -1,0 +1,98 @@
+@use "../../../src/styles/theme.module.scss" as theme;
+
+.root {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+    padding: 0 20px;
+    background-color: #293b3f;
+    color: #ffffff;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+.logo {
+    color: #f4e9d6;
+    font-family: theme.$font-merge-one, sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    cursor: pointer;
+    text-shadow: 0px 0px 4.8px rgba(255, 255, 255, 0.7);
+}
+
+
+.menu {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+
+    @media (max-width: 768px) {
+        display: none; 
+
+        &.active {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 64px;
+            right: 0;
+            background-color: #293b3f;
+            width: auto;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            gap: 15px;
+            z-index: 999;
+        }
+    }
+}
+
+.menuButton {
+    padding: 10px;
+    font-family: theme.$font-merge-one, sans-serif;
+    color: #ffffff;
+    text-decoration: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+
+    &:hover {
+        color: #b2c8c5;
+    }
+}
+
+.registerButton {
+    background-color: #f4e0c9;
+    color: #293b3f;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-family: theme.$font-merge-one, sans-serif;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #ead1b5;
+    }
+}
+
+
+.burgerMenu {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+
+    div {
+        width: 25px;
+        height: 3px;
+        background-color: #f4e9d6;
+    }
+
+    @media (max-width: 768px) {
+        display: flex; 
+    }
+}

@@ -1,0 +1,55 @@
+@use "../../../src/styles/theme.module.scss" as theme;
+
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f4e9d6; 
+    font-family: "Merge One", sans-serif;
+    padding: 20px;
+}
+
+.successBox {
+    background: #d6ccbc;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+    border: 2px solid #2e433f;
+}
+
+.successIcon {
+    width: 100px;
+    margin-bottom: 20px;
+}
+
+.successTitle {
+    font-size: 2.5rem;
+    color: #2e433f;
+    margin-bottom: 10px;
+}
+
+.successMessage {
+    font-size: 1.2rem;
+    color: #2e433f;
+}
+
+.successButton {
+    padding: 12px 25px;
+    background-color: #2e433f;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-family: theme.$font-merge-one, sans-serif;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 20px;
+
+    &:hover {
+        background-color: #1f312b;
+    }
+}

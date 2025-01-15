@@ -1,0 +1,18 @@
+.button {
+  width: 100%; 
+  max-width: 400px; 
+  padding: 10px;
+  border-radius: 7px;
+  background: rgba(35, 35, 35, 0.6);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.46);
+  cursor: pointer;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: "Merge One", sans-serif;
+}
+
+.button:hover {
+  background: rgba(35, 35, 35, 0.8);
+}

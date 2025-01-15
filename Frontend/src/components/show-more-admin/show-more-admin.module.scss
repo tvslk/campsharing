@@ -1,0 +1,123 @@
+@use "../../../src/styles/theme.module.scss" as theme;
+
+.showMorePage {
+  padding: 20px;
+  background-color: #f4e9d6;
+  font-family: theme.$font-merge-one, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    padding: 64px;
+    display: flex;
+  }
+
+  h2 {
+    text-align: center;
+    font-size: 28px;
+    color: #2e433f;
+    margin-top: 70px;
+  }
+
+  .bigTableContainer {
+    background-color: #d6ccbc;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed; 
+      
+      thead {
+        th {
+          font-size: 16px;
+          text-transform: uppercase;
+          color: #2e433f;
+          text-align: left;
+          padding: 15px;
+          background-color: #d5ccbc;
+        }
+      }
+
+      tbody {
+        tr {
+          display: table-row;
+          height: 60px; 
+          &:last-child td {
+            border-bottom: none; 
+          }
+        }
+
+        td {
+          padding: 15px;
+          border-bottom: 1px solid #78726983;
+          color: #787269;
+          text-overflow: ellipsis; 
+          word-break: break-word;
+          vertical-align: middle;
+          position: relative; 
+
+          &:first-child {
+            width: 50px; 
+            text-align: left;
+          }
+
+          .statusDot {
+            display: block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            float: right;
+
+            &.green {
+              background-color: #4f685f;
+            }
+
+            &.yellow {
+              background-color: #f9cd86;
+            }
+          }
+
+          
+          .actionButtons {
+            display: flex;
+            gap: 10px;
+            position: absolute;
+            right: 10px; 
+            top: 50%;
+            transform: translateY(-50%);
+
+            button {
+              background: none;
+              border: none;
+              cursor: pointer;
+              font-size: 14px;
+              color: #2e433f;
+              padding: 5px 10px;
+              text-transform: uppercase;
+              transition: color 0.3s;
+
+              &:hover {
+                color: #4f685f;
+              }
+
+              &.edit {
+                border: 1px solid #4f685f;
+                border-radius: 4px;
+              }
+
+              &.remove {
+                border: 1px solid #f9cd86;
+                border-radius: 4px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,45 @@
+@use "../../../src/styles/theme.module.scss" as theme; 
+
+.formAndButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  align-items: center;  
+  font-family: theme.$font-merge-one; 
+  height: 70vh;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; 
+  gap: 20px;
+  width: 100%;
+  flex: 1;
+  max-width: 400px; 
+  font-family: theme.$font-merge-one; 
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px;
+  font-family: theme.$font-merge-one; 
+}
+
+input {
+  font-family: theme.$font-merge-one; 
+}
+
+.errorMessage {
+  color: #e7dfcf;
+  margin-bottom: 10px;
+}
+
+.error{
+  color: #e7dfcf;
+  margin: 0 auto;
+}
+

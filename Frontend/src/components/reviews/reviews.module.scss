@@ -1,0 +1,139 @@
+@use "../../../src/styles/theme.module.scss" as theme;
+
+.container {
+    padding: 70px;
+    background-color: #f4e9d6;
+    min-height: 100vh;
+    font-family: theme.$font-merge-one, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    font-size: 2.5rem;
+    color: #2e433f;
+    margin-bottom: 40px;
+}
+
+.reviewsList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 80%;
+    max-width: 800px;
+}
+
+.reviewCard {
+    background: #d6ccbc;
+    border-radius: 10px;
+    padding: 20px;
+    font-size: 1.1rem;
+    color: #2e433f;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+}
+
+.rating {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.star {
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}
+
+.filledStar {
+    color: #efd5a4; 
+}
+
+.emptyStar {
+    color: #d4ccbe; 
+}
+
+.reviewForm {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 80%;
+    max-width: 800px;
+}
+
+.ratingSelector {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+}
+
+.textInput {
+    width: 100%;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    font-family: theme.$font-merge-one, sans-serif;
+    resize: none;
+}
+
+.submitButton {
+    padding: 10px 25px;
+    background-color: #436d5d;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: theme.$font-merge-one, sans-serif;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    &:hover {
+        background-color: #365144;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 30px;
+    }
+
+    .title {
+        font-size: 2rem;
+        text-align: center;
+        padding-top: 30px;
+    }
+
+    .reviewsList, .reviewForm {
+        width: 100%;
+    }
+
+    .textInput {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+
+    .submitButton {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.8rem;
+    }
+
+    .textInput {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+
+    .submitButton {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+}

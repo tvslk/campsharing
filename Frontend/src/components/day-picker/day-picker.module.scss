@@ -1,0 +1,122 @@
+@use "../../../src/styles/theme.module.scss" as theme;
+
+.dayPicker {
+    height: 300px;
+    width: 100%;
+    min-width: 400px; 
+    max-width: 500px; 
+    background: #d6ccbc;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    color: #757575;
+    font-family: theme.$font-merge-one, sans-serif;
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    width: 80%;
+
+    .currentMonth {
+      font-size: 18px;
+      font-weight: bold;
+      color: #787269;
+    }
+
+    .navButton {
+      background: none;
+      border: none;
+      color: #2e433f;
+      cursor: pointer;
+      padding: 10px 15px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: rgba(70, 70, 70, 0.2);
+      }
+    }
+  }
+
+  .calendarGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); 
+    gap: 10px;
+    width: 80%;
+    flex-grow: 1; 
+    align-content: center; 
+  }
+
+  .day {
+    padding: 10px;
+    text-align: center;
+    background: #f4e9d6;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #2e433f;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background: #b9a078;
+      color: white;
+    }
+
+    &.selected {
+      background: #436d5d;
+      color: white;
+    }
+
+    &.reserved{
+      background-color: #efd5a4;
+      color: #fff;
+      cursor: not-allowed;
+    }
+
+    &.disabled {
+      background: rgba(214, 204, 188, 0.5);
+      color: rgba(120, 114, 105, 0.5);
+      cursor: not-allowed;
+    }
+  }
+}
+
+
+
+@media (max-width: 1240px) {
+  .dayPicker {
+    min-width: 270px;
+    height: 250px; 
+    width: 90%; 
+    font-size: 1rem; 
+
+    .header {
+      width: 90%; 
+      .currentMonth {
+        font-size: 16px; 
+      }
+      .navButton {
+        padding: 8px 10px; 
+      }
+    }
+
+    .calendarGrid {
+      gap: 8px; 
+    }
+
+    .day {
+      padding: 5px; 
+      font-size: 12px; 
+    }
+  }
+}
+

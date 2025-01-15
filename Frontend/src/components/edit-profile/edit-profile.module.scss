@@ -1,0 +1,210 @@
+@use "../../../src/styles/theme.module.scss" as theme;
+
+.container {
+  padding: 70px;
+  font-family: theme.$font-merge-one, sans-serif;
+  height: calc(100vh - 140px); 
+  background-color: #f4e9d6;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 40px;
+  flex-grow: 1;
+  align-items: stretch;
+}
+
+.label {
+  font-size: 16px;
+  color: #77726a;
+  margin-bottom: 4px;
+  margin-left : 10px;
+  display: block;
+}
+
+
+.left,
+.right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.right {
+  margin-bottom: 50%;
+}
+
+.profilePicture {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 0.9;
+  margin-top: 30px;
+
+  .imagePreview {
+    height: 200px;
+    width: 200px;
+    background: #d6ccbc;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #757575;
+    font-family: theme.$font-merge-one, sans-serif;
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+
+  .imageinputButton {
+    background: #436d5d;
+    border: none;
+    padding: 15px 30px;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.7rem;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: "M PLUS 1p", sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+
+    &:hover {
+      background-color: #365144;
+    }
+  }
+
+  .fileInput {
+    display: none;
+  }
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+
+  input,
+  textarea {
+    padding: 15px;
+    border: 1px solid #ccc;
+    background: #d6ccbc;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: theme.$font-merge-one, sans-serif;
+  }
+
+  textarea {
+    height: 100px;
+    resize: none;
+  }
+}
+
+.buttons {
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  margin-left: -20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  background-color: #f4e9d6;
+}
+
+.cancelButton {
+  background: #b9a078;
+  border: none;
+  padding: 15px 30px;
+  color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.submitButton {
+  background: #436d5d;
+  border: none;
+  padding: 15px 30px;
+  color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+}
+@media (max-width: 768px) {
+  .container {
+    padding: 20px; 
+    height: auto; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    margin-top: 40px; 
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+    flex-grow: 1;
+  }
+  
+.right {
+    margin-bottom: 0; 
+  }
+
+  .profilePicture {
+    align-items: center;
+
+    .imagePreview {
+      height: 150px; 
+      width: 150px;
+      margin-bottom: 15px; 
+    }
+
+    .imageinputButton {
+      padding: 12px;
+      font-size: 0.9rem;
+    }
+  }
+
+  .inputGroup {
+    gap: 15px; 
+    margin-bottom: 10px;
+
+    input,
+    textarea {
+      font-size: 1rem; 
+      padding: 12px;
+      border-radius: 8px; 
+    }
+
+    textarea {
+      height: 100px; 
+    }
+  }
+
+      .buttons {
+        position: relative; 
+        margin-top: 20px; 
+        display: flex;
+        flex-direction: column; 
+        align-items: center; 
+        justify-content: center; 
+        gap: 15px; 
+        width: 100%; 
+        margin-left: 0px;
+      }
+    
+      .cancelButton,
+      .submitButton {
+        width: 100%; 
+        max-width: 400px; 
+        padding: 12px; 
+        font-size: 1rem; 
+        border-radius: 8px; 
+        text-align: center; 
+      }
+    }

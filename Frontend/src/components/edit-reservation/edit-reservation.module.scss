@@ -1,0 +1,119 @@
+@use "../../../src/styles/theme.module.scss" as theme;
+
+.container {
+    padding: 70px;
+    height: calc(100vh - 140px);
+    background-color: #f4e9d6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px; 
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.imagePicker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 0.9;
+    margin-top: 30px;
+  
+    
+    .dayPicker {
+      height: 300px;
+      width: 100%;
+      max-width: 500px; 
+      background: #d6ccbc;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #757575;
+      font-family: theme.$font-merge-one, sans-serif;
+      text-align: center;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+  }
+
+.right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+
+.input {
+    padding: 15px;
+    border: 1px solid #ccc;
+    background: #d6ccbc;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: theme.$font-merge-one, sans-serif;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+
+.label {
+    font-size: 1.2rem;
+    font-family: theme.$font-merge-one, sans-serif;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #293b3f;
+}
+
+
+.buttons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.cancelButton, .submitButton {
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.cancelButton {
+    background: #b9a078;
+    border: none;
+    color: white;
+}
+
+.submitButton {
+    background: #436d5d;
+    border: none;
+    color: white;
+}
+
+
+.selectedDay {
+    background: #436d5d !important;
+    color: white !important;
+    border-radius: 50%;
+}
+
+.rangeSelected {
+    background: #8caea0 !important;
+    color: white !important;
+    border-radius: 10px;
+}

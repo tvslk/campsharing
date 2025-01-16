@@ -114,30 +114,35 @@ export const ShowMoreAdmin = () => {
         alert("Nie ste prihlásený.");
         return;
       }
-
-      
+  
+      console.log("Deleting gadget with ID:", id);
+  
       if (tableType === "equipment") {
         const resp = await fetch(
           `https://campsharing-dbdjb9cycyhjcjdp.westeurope-01.azurewebsites.net/api/gadgets/delete/${id}`,
           {
             method: "DELETE",
+            mode: "cors",
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
+  
         if (!resp.ok) {
-          throw new Error("Nepodarilo sa vymazať gadget.");
+          const errorData = await resp.json();
+          throw new Error(errorData.message || "Nepodarilo sa vymazať gadget.");
         }
-        alert("Gadget bol úspešne vymazaný!");
-        setData((prev) => prev.filter((item) => item.id !== id));
+  
+        console.log("Gadget bol úspešne vymazaný!");
+        setData((prev) => prev.filter((item) => String(item.id) !== String(id)));
       }
-    } catch (error) {
-      console.error("Chyba pri odstraňovaní:", error);
-      alert("Chyba pri odstraňovaní záznamu.");
+    } catch (error: any) {
+      console.error("Chyba pri odstraňovaní:", error.message || error);
+      console.log("Chyba pri odstraňovaní záznamu.");
+      alert(`Chyba pri odstraňovaní: ${error.message || error}`);
     }
   };
-
   
   const filteredKeys = (row: any) =>
     Object.keys(row).filter(

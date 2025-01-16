@@ -103,6 +103,7 @@ padding: 0 20px 40px;
     border-radius: 10px;
     font-size: 1rem;
     cursor: pointer;
+    font-family: theme.$font-merge-one, sans-serif;
     transition: background-color 0.3s ease;
 
     &:hover {

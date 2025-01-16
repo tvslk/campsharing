@@ -45,7 +45,7 @@ export const AdminDashboard = () => {
         const transformedData = data.map((gadget: any) => ({
           id: `K${String(gadget.id).padStart(3, "0")}`,
           gadgetName: gadget.gadgetName,
-          status: gadget.status === "AVAILABLE" ? "Dostupné" : "Nedostupné"
+          status: gadget.status === "available" ? "Dostupné" : "Nedostupné"
         }));
 
         setGadgets(transformedData);
@@ -62,7 +62,8 @@ export const AdminDashboard = () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) throw new Error("Not authenticated");
-
+    
+        // Fetch all transactions
         const response = await fetch(
           "https://campsharing-dbdjb9cycyhjcjdp.westeurope-01.azurewebsites.net/api/transactions/all",
           {
@@ -74,20 +75,46 @@ export const AdminDashboard = () => {
             },
           }
         );
-
+    
         if (!response.ok) {
           throw new Error(`Failed to fetch transactions: ${response.status}`);
         }
-
-        const data = await response.json();
-        const transformedTransactions = data.map((transaction: any) => ({
+    
+        const transactions = await response.json();
+    
+        // Fetch all users
+        const usersResponse = await fetch(
+          "https://campsharing-dbdjb9cycyhjcjdp.westeurope-01.azurewebsites.net/api/user/all",
+          {
+            method: "GET",
+            mode: "cors",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+    
+        if (!usersResponse.ok) {
+          throw new Error(`Failed to fetch users: ${usersResponse.status}`);
+        }
+    
+        const users = await usersResponse.json();
+    
+        // Map user IDs to user names for easy lookup
+        const userMap: { [key: number]: string } = {};
+        users.forEach((user: any) => {
+          userMap[user.id] = user.username || "Unknown User";
+        });
+    
+        // Transform transactions and include user names
+        const transformedTransactions = transactions.map((transaction: any) => ({
           id: `T${String(transaction.id).padStart(3, "0")}`,
           gadgetName: transaction.gadgetName,
-          userId: transaction.userId,
+          userName: userMap[transaction.userId] || "Unknown User", // Corrected this line
           startDate: formatDate(transaction.startDate),
-          endDate: formatDate(transaction.endDate)
+          endDate: formatDate(transaction.endDate),
         }));
-
+    
         setTransactions(transformedTransactions);
       } catch (error) {
         console.error("Error fetching transactions:", error);
@@ -137,8 +164,9 @@ export const AdminDashboard = () => {
     };
 
     fetchGadgets();
-    fetchTransactions();
     fetchUsers();
+    fetchTransactions();
+    
   }, []);
 
   
@@ -214,8 +242,10 @@ export const AdminDashboard = () => {
                     <td>{tableType === "users" ? row.name : row.gadgetName}</td>
                     {tableType === "reservations" ? (
                       <>
-                        <td>{row.user}</td>
-                        <td>{row.startDate} - {row.endDate}</td>
+                        <td>{row.username}</td>
+                        <td>
+                          {row.startDate} - {row.endDate}
+                        </td>
                       </>
                     ) : tableType === "users" ? (
                       <>
@@ -226,7 +256,9 @@ export const AdminDashboard = () => {
                       <td>
                         <span
                           className={`${styles.statusDot} ${
-                            row.status === "available" ? styles.green : styles.yellow
+                            row.status === "Dostupné" || row.status === "available"
+                              ? styles.green
+                              : styles.yellow
                           }`}
                         ></span>
                       </td>
@@ -241,7 +273,10 @@ export const AdminDashboard = () => {
             </tbody>
           </table>
         </div>
-        <button className={styles.showMore} onClick={() => navigate(`/show-more/${tableType}`)}>
+        <button
+          className={styles.showMore}
+          onClick={() => navigate(`/show-more/${tableType}`)}
+        >
           + Zobraziť Viac
         </button>
       </section>

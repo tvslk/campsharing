@@ -13,7 +13,7 @@ export const GadgetReservation = () => {
     gadgetName: "",
     pricePerDay: "",
     gadgetDescription: "",
-    location: "Calvary Camp, Trenčianska 2097/1, Košice",
+    location: "Prosím vyberte lokalitu",
     additionalServices: {
       setupTent: true,
       basicCampSupplies: false,

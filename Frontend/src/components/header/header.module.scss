@@ -12,7 +12,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 2000; /* Increased to ensure the header is always on top */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
 }
@@ -26,19 +26,18 @@
     text-shadow: 0px 0px 4.8px rgba(255, 255, 255, 0.7);
 }
 
-
 .menu {
     display: flex;
     align-items: flex-end;
     gap: 10px;
 
     @media (max-width: 768px) {
-        display: none; 
+        display: none;
 
         &.active {
             display: flex;
             flex-direction: column;
-            position: absolute;
+            position: fixed; /* Changed from absolute to fixed */
             top: 64px;
             right: 0;
             background-color: #293b3f;
@@ -46,7 +45,7 @@
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             gap: 15px;
-            z-index: 999;
+            z-index: 3000; /* Ensures it stays above other elements */
         }
     }
 }
@@ -79,11 +78,11 @@
     }
 }
 
-
 .burgerMenu {
     display: none;
     flex-direction: column;
     gap: 5px;
+    z-index: 3000; /* Ensures it matches the menu z-index */
     cursor: pointer;
 
     div {
@@ -93,6 +92,6 @@
     }
 
     @media (max-width: 768px) {
-        display: flex; 
+        display: flex;
     }
 }

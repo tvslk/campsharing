@@ -121,3 +121,58 @@
     }
   }
 }
+@media (max-width: 768px) {
+    .showMorePage {
+      .bigTableContainer {
+        table {
+          thead {
+            display: none; // Hide the table headers on smaller screens
+          }
+  
+          tbody {
+            tr {
+              display: flex;
+              flex-direction: column; // Stack rows vertically
+              height: auto;
+              margin-bottom: 15px; // Add spacing between rows
+              border: 1px solid #78726983; // Border for each "card"
+              border-radius: 8px;
+              padding: 15px;
+  
+              td {
+                display: flex;
+                flex-direction: column; // Stack label and value
+                padding: 10px 0;
+                border-bottom: none; // Remove default borders
+                color: #2e433f;
+  
+                &:before {
+                  content: attr(data-label); // Dynamically pull label from `data-label` attribute
+                  font-weight: bold;
+                  font-size: 14px;
+                  color: #4f685f;
+                  margin-bottom: 5px; // Space between label and value
+                  display: block;
+                }
+  
+                &:last-child {
+                  margin-top: 10px; // Add space before buttons
+                }
+  
+                .actionButtons {
+                  position: static; // Reset position
+                  justify-content: flex-end;
+                  gap: 8px;
+  
+                  button {
+                    font-size: 12px;
+                    padding: 5px 8px; // Adjust button size
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }

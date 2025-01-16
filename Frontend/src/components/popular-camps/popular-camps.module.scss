@@ -30,7 +30,7 @@
   .header {
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 0;
     text-align: center;
     margin: 20px 0;
   
@@ -55,6 +55,7 @@
     position: relative;
     width: 100%;
     max-width: 1270px;
+    z-index: 0;
   }
   
   .carousel {

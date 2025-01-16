@@ -14,6 +14,8 @@ export const GadgetReservation = () => {
     pricePerDay: "",
     gadgetDescription: "",
     location: "Prosím vyberte lokalitu",
+    status: "active",
+    totalCost: 0.0,
     additionalServices: {
       setupTent: true,
       basicCampSupplies: false,
@@ -174,26 +176,34 @@ export const GadgetReservation = () => {
         navigate("/login");
         return;
       }
-
+  
       if (!gadgetId) {
         throw new Error("Gadget ID is missing. Cannot proceed with the reservation.");
       }
-
+  
       if (selectedDays.length === 0) {
         alert("Please select reservation dates.");
         return;
       }
-
+  
       const startDate = selectedDays[0]?.toISOString();
       const endDate = selectedDays[selectedDays.length - 1]?.toISOString();
-
+  
+      // Calculate total cost and ensure it's formatted correctly
+      const totalCost = parseFloat(totalPrice.toFixed(1));
+  
+      // Prepare the request body
       const requestBody = {
         gadgetId: parseInt(gadgetId),
         startDate,
         endDate,
-        totalPrice: parseFloat(totalPrice.toFixed(2)),
+        totalCost, // Include the total cost
+        status: form.status, // Include the status from the form
       };
-
+  
+      console.log("Submitting reservation with:", requestBody);
+  
+      // Send the request
       const response = await fetch(
         "https://campsharing-dbdjb9cycyhjcjdp.westeurope-01.azurewebsites.net/api/transactions/add",
         {
@@ -205,10 +215,11 @@ export const GadgetReservation = () => {
           body: JSON.stringify(requestBody),
         }
       );
-
+  
+      // Handle the response
       if (response.status === 201) {
         localStorage.removeItem("selectedPlace");
-        localStorage.removeItem("selectedGadgetId")
+        localStorage.removeItem("selectedGadgetId");
         navigate("/success");
       } else {
         const errorData = await response.json();
@@ -217,7 +228,7 @@ export const GadgetReservation = () => {
     } catch (error) {
       console.error("Error saving reservation:", error);
       localStorage.removeItem("selectedPlace");
-      localStorage.removeItem("selectedGadgetId")
+      localStorage.removeItem("selectedGadgetId");
       navigate("/error");
     }
   };
@@ -335,6 +346,7 @@ export const GadgetReservation = () => {
               submitLabel="Prenajať"
               onCancel={handleCancel}
               onSubmit={handleSave}
+              disabled={selectedDays.length === 0 || form.location === "Prosím vyberte lokalitu"}
             />
           </div>
         </div>

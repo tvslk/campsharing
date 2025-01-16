@@ -106,44 +106,158 @@ export const ShowMoreAdmin = () => {
 
   
   
+  const fetchPhotoUrls = async (id: string, token: string) => {
+    try {
+      console.log("Fetching photo URLs for gadget ID:", id);
+      const photoResponse = await fetch(
+        `https://campsharing-dbdjb9cycyhjcjdp.westeurope-01.azurewebsites.net/api/gadgets/${id}/photos`,
+        {
+          method: "GET",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+  
+      if (!photoResponse.ok) {
+        const errorText = await photoResponse.text();
+        console.error("Error fetching photo URLs:", errorText);
+        alert(`Error fetching photo URLs: ${errorText}`);
+        return [];
+      }
+  
+      const photoData = await photoResponse.json();
+      console.log("Fetched photo data:", photoData);
+  
+      if (!Array.isArray(photoData.urls) || photoData.urls.length === 0) {
+        console.warn("No photos found in the response.");
+        return [];
+      }
+  
+      return photoData.urls;
+    } catch (error) {
+      console.error("Error during photo fetch:", error);
+      return [];
+    }
+  };
+  
+  const deletePhoto = async (photoUrl: string, id: string, token: string) => {
+    try {
+      console.log("Attempting to delete photo with URL:", photoUrl);
+  
+      const formData = new FormData();
+      formData.append("photoUrl", photoUrl);
+  
+      const deletePhotoResponse = await fetch(
+        `https://campsharing-dbdjb9cycyhjcjdp.westeurope-01.azurewebsites.net/api/gadgets/${id}/delete-photo`,
+        {
+          method: "DELETE",
+          mode: "cors",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
+  
+      console.log(
+        "DELETE photo request sent. Response status:",
+        deletePhotoResponse.status
+      );
+  
+      if (!deletePhotoResponse.ok) {
+        const deletePhotoError = await deletePhotoResponse.text();
+        console.error("Error deleting photo:", deletePhotoError);
+        return false;
+      }
+  
+      const deletePhotoSuccess = await deletePhotoResponse.json();
+      console.log("Photo deletion response:", JSON.stringify(deletePhotoSuccess, null, 2));
+  
+      return true;
+    } catch (error) {
+      console.error("Error during photo deletion:", error);
+      return false;
+    }
+  };
+  
+  const deleteGadget = async (id: string, token: string) => {
+    try {
+      console.log("Attempting to delete gadget with ID:", id);
+  
+      const deleteGadgetResponse = await fetch(
+        `https://campsharing-dbdjb9cycyhjcjdp.westeurope-01.azurewebsites.net/api/gadgets/delete/${id}`,
+        {
+          method: "DELETE",
+          mode: "cors",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+  
+      console.log(
+        "DELETE gadget request sent. Response status:",
+        deleteGadgetResponse.status
+      );
+  
+      if (!deleteGadgetResponse.ok) {
+        const deleteGadgetError = await deleteGadgetResponse.text();
+        console.error("Error deleting gadget:", deleteGadgetError);
+        return false;
+      }
+  
+      const deleteGadgetSuccess = await deleteGadgetResponse.json();
+      console.log("Gadget deletion response:", JSON.stringify(deleteGadgetSuccess, null, 2));
+  
+      return true;
+    } catch (error) {
+      console.error("Error during gadget deletion:", error);
+      return false;
+    }
+  };
   
   const handleRemove = async (id: string) => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
-        alert("Nie ste prihlásený.");
+        alert("You are not logged in.");
         return;
       }
   
-      console.log("Deleting gadget with ID:", id);
+      console.log("Starting removal process for gadget ID:", id);
   
-      if (tableType === "equipment") {
-        const resp = await fetch(
-          `https://campsharing-dbdjb9cycyhjcjdp.westeurope-01.azurewebsites.net/api/gadgets/delete/${id}`,
-          {
-            method: "DELETE",
-            mode: "cors",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+      // Fetch photo URLs
+      const photoUrls = await fetchPhotoUrls(id, token);
+  
+      if (photoUrls.length === 0) {
+        console.log("No photos to delete. Proceeding to delete the gadget.");
+      } else {
+        // Delete each photo
+        for (const photoUrl of photoUrls) {
+          const photoDeleted = await deletePhoto(photoUrl, id, token);
+          if (!photoDeleted) {
+            console.error("Photo deletion failed. Stopping the removal process.");
+            return;
           }
-        );
-  
-        if (!resp.ok) {
-          const errorData = await resp.json();
-          throw new Error(errorData.message || "Nepodarilo sa vymazať gadget.");
         }
+      }
   
-        console.log("Gadget bol úspešne vymazaný!");
+      // Delete the gadget
+      const gadgetDeleted = await deleteGadget(id, token);
+      if (gadgetDeleted) {
+        console.log("Gadget was successfully deleted!");
         setData((prev) => prev.filter((item) => String(item.id) !== String(id)));
       }
-    } catch (error: any) {
-      console.error("Chyba pri odstraňovaní:", error.message || error);
-      console.log("Chyba pri odstraňovaní záznamu.");
-      alert(`Chyba pri odstraňovaní: ${error.message || error}`);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error during deletion process:", error.message);
+        alert(`Error during deletion process: ${error.message}`);
+      } else {
+        console.error("Unexpected error during deletion process:", error);
+        alert("Unexpected error during deletion process.");
+      }
     }
   };
-  
+
   const filteredKeys = (row: any) =>
     Object.keys(row).filter(
       (key) =>

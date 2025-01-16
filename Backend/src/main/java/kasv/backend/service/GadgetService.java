@@ -8,12 +8,14 @@ import kasv.backend.repository.GadgetRepository;
 import kasv.backend.repository.GadgetStatus;
 import kasv.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.security.access.AccessDeniedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -156,11 +158,15 @@ public class GadgetService {
         return convertToResponseDTO(gadget);
     }
 
-    public boolean deleteGadgetById(Long id, String username) {
+    public boolean deleteGadgetById(Long id, String username, Collection<? extends GrantedAuthority> authorities) {
         Gadget gadget = gadgetRepository.findById(id).orElse(null);
-        if (gadget != null && gadget.getUser().getEmail().equals(username)) {
-            gadgetRepository.delete(gadget);
-            return true;
+        if (gadget != null) {
+            boolean isAdmin = authorities.stream()
+                    .anyMatch(auth -> auth.getAuthority().equals("ROLE_admin"));
+            if (gadget.getUser().getEmail().equals(username) || isAdmin) {
+                gadgetRepository.delete(gadget);
+                return true;
+            }
         }
         return false;
     }

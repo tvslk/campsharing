@@ -7,6 +7,7 @@ interface ButtonComponentProps {
   submitLabel: string;
   onCancel?: () => void;
   onSubmit?: () => void;
+  disabled?: boolean;
 }
 
 export const ButtonComponent: React.FC<ButtonComponentProps> = ({
@@ -14,13 +15,14 @@ export const ButtonComponent: React.FC<ButtonComponentProps> = ({
   submitLabel,
   onCancel,
   onSubmit,
+  disabled = false,
 }) => {
   return (
     <div className={styles.buttons}>
       <button type="button" onClick={onCancel} className={styles.cancelButton}>
         {cancelLabel}
       </button>
-      <button type="button" onClick={onSubmit} className={styles.submitButton}>
+      <button type="button" onClick={onSubmit} className={styles.submitButton} disabled={disabled}>
         {submitLabel}
       </button>
     </div>

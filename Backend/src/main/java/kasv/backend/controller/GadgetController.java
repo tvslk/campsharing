@@ -100,7 +100,7 @@ public class GadgetController {
         }
 
         try {
-            boolean isDeleted = gadgetService.deleteGadgetById(id, userDetails.getUsername());
+            boolean isDeleted = gadgetService.deleteGadgetById(id, userDetails.getUsername(), userDetails.getAuthorities());
             if (isDeleted) {
                 logger.info("Gadget with id: {} deleted successfully by user: {}", id, userDetails.getUsername());
                 return ResponseEntity.ok("Gadget deleted successfully");

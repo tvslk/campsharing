@@ -24,6 +24,7 @@ import { Recenzie } from "./components/reviews/reviews";
 import { SuccessPage } from "./components/success-page/success-page";
 import { ErrorPage } from "./components/error-page/error-page";
 import { ShowMorePage } from "./components/show-more/show-more";
+import { Error404 } from "./components/error-page/404";
 
 
 createRoot(document.getElementById("root")!).render(
@@ -51,6 +52,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/user-dashboard" element={<UserDashboard />} />
         <Route path="/success" element={<SuccessPage />} />
         <Route path="/error" element={<ErrorPage />} />
+        <Route path="*" element={<Error404 />} />
 
 
       </Routes>
